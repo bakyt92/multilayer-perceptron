@@ -2,6 +2,7 @@ import sys
 import argparse
 from parser.parser import Parser
 from split.ft_split import Split_Class
+from train.ft_train import Train_class
 
 def main():
 	pars = argparse.ArgumentParser(description="Multilayer perceptron program")
@@ -9,7 +10,8 @@ def main():
 	train_parser = subparsers.add_parser("train", help="Train model")
 	predict_parser = subparsers.add_parser("predict", help="Predict result")
 	split_parser = subparsers.add_parser("split", help="Split data to 2 datasets")
-	train_parser.add_argument("data_file", help="input resource file")
+	train_parser.add_argument("training_file", help="input resource train file")
+	train_parser.add_argument("validation_file", help="input resource validation file")
 	split_parser.add_argument("data_file", help="input resource file")
 	split_parser.add_argument("training_file", help="output file for training")
 	split_parser.add_argument("validation_file", help="output file for validation")
@@ -23,9 +25,13 @@ def main():
 	try:
 		if args.command == "train":
 			Reader = Parser()
-			Reader.read_csv(args.data_file)
-			data = Reader.get_data()
-
+			Reader.read_csv(args.training_file)
+			data_training = Reader.get_data()
+			Reader.read_csv(args.validation_file)
+			data_validation = Reader.get_data()
+			Trainer = Train_class(data_training, data_validation)
+			Trainer.process_data()
+			
 		elif args.command == "split":
 			Reader = Parser()
 			Reader.read_csv(args.data_file)
