@@ -32,13 +32,20 @@ class Train_class:
             variances.append(variance) 
         std_devs = [value ** 0.5 for value in variances]
         return std_devs
+    
+    def ft_recalc(self, columns, means, std_devs):
+        new_columns = []
+        for column, mean, std_dev in zip(columns, means, std_devs):
+            new_columns = [(value - mean) / std_dev for value in column]
+        self.input_layer = list(zip(*new_columns))
             
 
     def data_normalization(self):
         try:
             columns = list(zip(*self.input_layer))
-            means = [sum (x for x in columns) / len(columns)]
-            self.ft_std(columns, means)
+            means = [sum (column) / len(column) for column in columns]
+            std_devs = self.ft_std(columns, means)
+            array_new = self.ft_recalc(columns, means, std_devs)
         except Exception as e:
             print(f"Exception for processing data: {e}")
         return
