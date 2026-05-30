@@ -1,4 +1,5 @@
 import sys
+import random
 
 class Split_Class:
     def __init__(self):
@@ -7,11 +8,14 @@ class Split_Class:
         self.validation_set = []
     
 
-    def ft_split(self, data, ratio):
+    def ft_split(self, data, ratio, v_seed=4):
         try:
             self.input_data = data
             malignant = [row for row in data if row[1] == 'M']
             benign = [row for row in data if row[1] == 'B']
+            random.seed(v_seed)
+            random.shuffle(malignant)
+            random.shuffle(benign)
             split_index_b = int(ratio * len(benign))
             split_index_m = int(ratio * len(malignant))
             self.training_set = malignant[:split_index_m] + benign[:split_index_b]

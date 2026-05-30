@@ -15,6 +15,8 @@ def main():
 	split_parser.add_argument("validation_file", help="output file for validation")
 	split_parser.add_argument("--ratio", type=float, default=0.8,
                               help="Train ratio, e.g. 0.8 means 80% train and 20% validation")
+	split_parser.add_argument("--seed", type=int, default=2, choices=range(0, 1000),
+                              help="Random seed for reproducibility (0-999)")
 	predict_parser.add_argument("training_file", help="input file for training")
 	predict_parser.add_argument("validation_file", help="input file for validation")
 	args = pars.parse_args()
@@ -23,7 +25,7 @@ def main():
 			Reader = Parser()
 			Reader.read_csv(args.data_file)
 			data = Reader.get_data()
-			
+
 		elif args.command == "split":
 			Reader = Parser()
 			Reader.read_csv(args.data_file)
