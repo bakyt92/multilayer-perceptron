@@ -4,22 +4,22 @@ class Train_class:
     def __init__(self, data_training, data_validation):
         self.training_set = data_training
         self.validation_set = data_validation
-        self.input_layer = []
-        self.results = []
+        self.X_train = []
+        self.Y_train = []
 
     def process_data(self):
         try:
-            input_layer = []
-            results = []
+            X_train = []
+            Y_train = []
             for row in self.training_set:
                 row_float = [float(item) for item in row[2:]] 
-                input_layer.append(row_float)
+                X_train.append(row_float)
                 if row[1] == 'B':
-                    results.append(0)
+                    Y_train.append(0)
                 else:
-                    results.append(1)
-            self.input_layer = input_layer
-            self.results = results
+                    Y_train.append(1)
+            self.X_train = X_train
+            self.Y_train = Y_train
         except Exception as e:
             print(f"Exception for processing data: {e}")
         return
@@ -36,13 +36,14 @@ class Train_class:
     def ft_recalc(self, columns, means, std_devs):
         new_columns = []
         for column, mean, std_dev in zip(columns, means, std_devs):
-            new_columns = [(value - mean) / std_dev for value in column]
-        self.input_layer = list(zip(*new_columns))
+            new_column = [(value - mean) / std_dev for value in column]
+            new_columns.append(new_column)
+        self.X_train = list(zip(*new_columns))
             
 
     def data_normalization(self):
         try:
-            columns = list(zip(*self.input_layer))
+            columns = list(zip(*self.X_train))
             means = [sum (column) / len(column) for column in columns]
             std_devs = self.ft_std(columns, means)
             array_new = self.ft_recalc(columns, means, std_devs)
