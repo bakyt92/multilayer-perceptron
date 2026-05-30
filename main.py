@@ -24,7 +24,7 @@ def main():
 			Reader = Parser()
 			Reader.read_csv(args.data_file)
 			data = Reader.get_data()
-		elif args.command == "split":
+		elif args.command == "predict":
 			Reader = Parser()
 			Reader.read_csv(args.training_file)
 			data_training = Reader.get_data()
