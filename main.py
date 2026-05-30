@@ -1,6 +1,7 @@
 import sys
 import argparse
 from parser.parser import Parser
+from split.ft_split import Split_Class
 
 def main():
 	pars = argparse.ArgumentParser(description="Multilayer perceptron program")
@@ -8,12 +9,14 @@ def main():
 	train_parser = subparsers.add_parser("train", help="Train model")
 	predict_parser = subparsers.add_parser("predict", help="Predict result")
 	split_parser = subparsers.add_parser("split", help="Split data to 2 datasets")
-	train_parser.add_argument("data_file", help="input resource file", required=True)
-	split_parser.add_argument("data_file", help="input resource file", required=True)
-	split_parser.add_argument("training_file", help="output file for training", required=True)
-	split_parser.add_argument("validation_file", help="output file for validation", required=True)
-	predict_parser.add_argument("training_file", help="input file for training", required=True)
-	predict_parser.add_argument("validation_file", help="input file for validation", required=True)
+	train_parser.add_argument("data_file", help="input resource file")
+	split_parser.add_argument("data_file", help="input resource file")
+	split_parser.add_argument("training_file", help="output file for training")
+	split_parser.add_argument("validation_file", help="output file for validation")
+	split_parser.add_argument("--ratio", type=float, default=0.8,
+                              help="Train ratio, e.g. 0.8 means 80% train and 20% validation")
+	predict_parser.add_argument("training_file", help="input file for training")
+	predict_parser.add_argument("validation_file", help="input file for validation")
 	args = pars.parse_args()
 	try:
 		if args.command == "train":
@@ -24,6 +27,8 @@ def main():
 			Reader = Parser()
 			Reader.read_csv(args.data_file)
 			data = Reader.get_data()
+			data = Reader.ft_clean_data()
+			Splitter = Split_Class.ft_split(data)
 		elif args.command == "predict":
 			Reader = Parser()
 			Reader.read_csv(args.training_file)
