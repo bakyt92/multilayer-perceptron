@@ -23,12 +23,14 @@ def main():
 			Reader = Parser()
 			Reader.read_csv(args.data_file)
 			data = Reader.get_data()
+			
 		elif args.command == "split":
 			Reader = Parser()
 			Reader.read_csv(args.data_file)
 			Reader.ft_clean_data()
 			data = Reader.get_data()
 			Splitter = Split_Class()
+			Splitter.export(args.training_file, args.validation_file)
 			if args.ratio < 0 or args.ratio > 1:
 				raise ValueError("Args Ratio is not in range from 0 to 1")
 			Splitter.ft_split(data, args.ratio)
