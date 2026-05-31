@@ -35,7 +35,18 @@ class Train_class:
             new_column = [(value - mean) / std_dev for value in column]
             new_columns.append(new_column)
         return list(zip(*new_columns))
-            
+    
+    def validation_normalisation(self, data):
+        try:
+            columns = list(zip(*data))
+            means = self.means_training
+            std_devs = self.stds_training
+            array_new = self.ft_recalc(columns, means, std_devs)
+        except Exception as e:
+            print(f"Exception for processing data: {e}")
+        self.means_training = means
+        self.stds_training = std_devs
+        return array_new
 
     def data_normalization(self, data):
         try:

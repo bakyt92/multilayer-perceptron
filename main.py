@@ -35,7 +35,7 @@ def main():
 			means_training = Trainer.get_means()
 			stds_training = Trainer.stds_training()
 			data_validation, validation_labels = Trainer.process_data(data_validation)
-			Y_train_norm = Trainer.data_normalization(data_validation)
+			Y_train_norm = Trainer.validation_normalisation(data_validation)
 
 			# data_validation, validation_labels = Trainer.process_data(data_validation)
 			# data_validation = Trainer.data_normalization(data_validation)
