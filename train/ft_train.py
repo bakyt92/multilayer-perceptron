@@ -2,8 +2,8 @@ import sys
 
 class Train_class:
     def __init__(self):
-        means_training = []
-        stds_training = []
+        self.means_training = []
+        self.stds_training = []
 
     def process_data(self, data):
         try:
