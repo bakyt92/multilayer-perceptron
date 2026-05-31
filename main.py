@@ -17,6 +17,8 @@ def main():
 						   help="Learning rate float value, e.g. --learning_rate 0.01")
 	train_parser.add_argument("--hidden_layers", type=int, default=[24, 24], nargs='+',
 						   help="Hidden layer sizes, e.g. --hidden_layers 24 24")
+	train_parser.add_argument("--batch_size", type=int, default=50, 
+						   help="Batch sizes for each epoch, e.g. --batch_size 50")
 	split_parser.add_argument("data_file", help="input resource file")
 	split_parser.add_argument("training_file", help="output file for training")
 	split_parser.add_argument("validation_file", help="output file for validation")
@@ -44,7 +46,7 @@ def main():
 			MLP = MLP_Class()
 			MLP.input(X_train_norm, training_labels, args.hidden_layers, args.epochs, args.learning_rate)
 			for rows in X_train_norm:
-				MLP.ft_calculation(rows, 1)
+				MLP.ft_calculation(rows)
 			# data_validation, validation_labels = Trainer.process_data(data_validation)
 			# data_validation = Trainer.data_normalization(data_validation)
 		elif args.command == "split":

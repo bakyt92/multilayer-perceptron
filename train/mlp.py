@@ -2,46 +2,56 @@ import sys
 import random
 
 class MLP_Class:
-    def __init__(self):
-        self.weights = []
-        self.biases = []
-        self.layer_sizes = []
-        self.learning_rate = 0
-        self.epochs = 0
-    
-    def create_layer(self, n_in, n_out):
-        if n_in < 1 or n_out < 1:
-            return None
-        W = []
-        for row in range(n_out):
-            row = []
-            for elem in range(n_in):
-                row.append(random.random() - 0.5)
-            W.append(row)
-        print(f"New Layer is created")
-        print(f"rows: {len(W)}, columns: {len(W[0])}")
-        return W
+	def __init__(self):
+		self.weights = []
+		self.biases = []
+		self.layer_sizes = []
+		self.learning_rate = 0
+		self.epochs = 0
+		self.z_layers_data = []
+		self.a_layers_data = []
+	
+	def create_layer(self, n_in, n_out):
+		if n_in < 1 or n_out < 1:
+			return None
+		W = []
+		for row in range(n_out):
+			row = []
+			for elem in range(n_in):
+				row.append(random.random() - 0.5)
+			W.append(row)
+		print(f"New Layer is created")
+		print(f"rows: {len(W)}, columns: {len(W[0])}")
+		return W
 
-    def input(self, X_train_norm, training_labels, l_sizes, epochs, learning_rate):
-        self.learning_rate = learning_rate
-        self.epochs = epochs
-        output_size = 2
-        input_size = len(X_train_norm[0])
-        self.layer_sizes = [input_size] + l_sizes + [output_size]
-        for index, size in enumerate(self.layer_sizes[1:], start=1):
-            self.weights.append(self.create_layer(self.layer_sizes[index - 1], size))
-            self.biases.append(size * [0])
-        return 
-    
-    def ft_activation(self):
-        
+	def input(self, X_train_norm, training_labels, l_sizes, epochs, learning_rate):
+		self.learning_rate = learning_rate
+		self.epochs = epochs
+		output_size = 2
+		input_size = len(X_train_norm[0])
+		self.layer_sizes = [input_size] + l_sizes + [output_size]
+		for index, size in enumerate(self.layer_sizes[1:], start=1):
+			self.weights.append(self.create_layer(self.layer_sizes[index - 1], size))
+			self.biases.append(size * [0])
+		return 
+	
+	def ft_activation(self):
+		pass
+		return
 
-    def ft_calculation(self, a_prev, layer_index):
-        z = []
-        for layer in self.weights:
-            for i, row in enumerate(layer):
-                sum_tmp = 0
-                for index, elem in enumerate(row):
-                    sum_tmp += elem * a_prev[index]
-                z.append(sum_tmp + self.biases[layer_index][i])
-        return
+	def ft_calculation(self, a_prev):	
+		layer_index = 0
+		for layer_index, layer in enumerate(self.weights):
+			z_layer = []
+			a_layer = []
+			for i, row in enumerate(layer):
+				sum_tmp = 0
+				for index, elem in enumerate(row):
+					sum_tmp += elem * a_prev[index]
+				z_layer.append(sum_tmp + self.biases[layer_index][i])
+			layer_index += 1
+			a_layer = [x if x > 0 else 0 for x in z_layer]
+			a_prev = a_layer
+			self.z_layers_data.append(z_layer)
+			self.a_layers_data.append(a_layer)
+		return
