@@ -41,4 +41,4 @@ class MLP_Class:
         for layer in self.weights:
             for row in layer:
                 for index, elem in enumerate(row):
-                    z = elem * a_prev[index]
+                    z += elem * a_prev[index]
