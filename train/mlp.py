@@ -10,6 +10,8 @@ class MLP_Class:
         self.epochs = 0
     
     def create_layer(n_in, n_out):
+        if n_in < 1 or n_out < 1:
+            return None
         W = []
         for row in range(n_out):
             row = []
@@ -26,3 +28,6 @@ class MLP_Class:
         output_size = 2
         input_size = len(X_train_norm[0])
         self.layer_sizes = [input_size] + l_sizes + output_size
+        for size, index in enumerate(self.layer_sizes[1:], start=1):
+            self.create_layer(self.layer_sizes[index - 1], size)
+
