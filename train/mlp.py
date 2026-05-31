@@ -1,6 +1,6 @@
 import sys
 
-class MLP:
+class MLP_Class:
     def __init__(self):
         self.weights = []
         self.biases = []
@@ -8,8 +8,5 @@ class MLP:
         self.learning_rate = 0
         self.epochs = 0
     
-    def input(self, ):
-
+    def input(self, X_train_norm, training_labels, l_sizes, epochs=100, learning_rate=0.01):
         
-
-    

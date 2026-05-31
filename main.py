@@ -2,7 +2,7 @@ import sys
 import argparse
 from parser.parser import Parser
 from split.ft_split import Split_Class
-from train.ft_train import Train_class
+from train.ft_train import Train_class, MLP_Class
 
 def main():
 	pars = argparse.ArgumentParser(description="Multilayer perceptron program")
@@ -12,6 +12,11 @@ def main():
 	split_parser = subparsers.add_parser("split", help="Split data to 2 datasets")
 	train_parser.add_argument("training_file", help="input resource train file")
 	train_parser.add_argument("validation_file", help="input resource validation file")
+	train_parser.add_argument("--epochs", type=int, default=100, help="Number of epochs")
+	train_parser.add_argument("--learning_rate", type=float, default=0.01, 
+						   help="Learning rate float value, e.g. --learning_rate 0.01")
+	train_parser.add_argument("--hidden_layers", type=int, default=[24, 24], nargs='+',
+						   help="Hidden layer sizes, e.g. --hidden_layers 24 24")
 	split_parser.add_argument("data_file", help="input resource file")
 	split_parser.add_argument("training_file", help="output file for training")
 	split_parser.add_argument("validation_file", help="output file for validation")
@@ -32,10 +37,12 @@ def main():
 			Trainer = Train_class()
 			X_train_raw, training_labels = Trainer.process_data(data_training)
 			X_train_norm = Trainer.data_normalization(X_train_raw)
-			means_training = Trainer.get_means()
-			stds_training = Trainer.stds_training()
+			# means_training = Trainer.get_means()
+			# stds_training = Trainer.stds_training()
 			Y_train_raw, validation_labels = Trainer.process_data(data_validation)
 			Y_train_norm = Trainer.validation_normalisation(Y_train_raw)
+			MLP = MLP_Class()
+			MLP.input(X_train_norm, training_labels, args.hidden_layers, args.epochs, args.learning_rate)
 
 			# data_validation, validation_labels = Trainer.process_data(data_validation)
 			# data_validation = Trainer.data_normalization(data_validation)
