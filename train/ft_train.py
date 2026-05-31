@@ -4,6 +4,14 @@ class Train_class:
     def __init__(self):
         self.means_training = []
         self.stds_training = []
+        self.w1 = []
+        self.b1 = []
+        self.w2 = []
+        self.b2 = []
+        self.w3 = []
+        self.b3 = []
+        self.w4 = []
+        self.b4 = []
 
     def process_data(self, data):
         try:
