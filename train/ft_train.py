@@ -1,9 +1,9 @@
 import sys
 
 class Train_class:
-    def __init__(self, data_training, data_validation):
-        self.training_set = data_training
-        self.validation_set = data_validation
+    def __init__(self):
+        means_training = []
+        stds_training = []
 
     def process_data(self, data):
         try:
@@ -45,7 +45,15 @@ class Train_class:
             array_new = self.ft_recalc(columns, means, std_devs)
         except Exception as e:
             print(f"Exception for processing data: {e}")
+        self.means_training = means
+        self.stds_training = std_devs
         return array_new
+    
+    def get_means(self):
+        return self.means_training
+    
+    def get_std(self):
+        return self.stds_training
             
         
 
