@@ -1,6 +1,6 @@
 import sys
 import random
-
+import math
 class MLP_Class:
 	def __init__(self):
 		self.weights = []
@@ -48,13 +48,13 @@ class MLP_Class:
 				for index, elem in enumerate(row):
 					sum_tmp += elem * a_prev[index]
 				z_layer.append(sum_tmp + self.biases[layer_index][i])
-			layer_index += 1
 			if layer_index == len(self.weights) - 1:
-				a_layer = math.exp(z_layer) / (math.exp(0) + math.exp(1))
+				exp_z = [math.exp(z_k) for z_k in z_layer]
+				sum_exp = sum(exp_z)
+				a_layer = [e_k / sum_exp for e_k in exp_z]
 			else:
 				a_layer = [x if x > 0 else 0 for x in z_layer]
-				a_prev = a_layer
-			
+			a_prev = a_layer
 			self.z_layers_data.append(z_layer)
 			self.a_layers_data.append(a_layer)
 		return a_layer
