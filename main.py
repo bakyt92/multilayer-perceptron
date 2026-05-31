@@ -30,8 +30,10 @@ def main():
 			Reader.read_csv(args.validation_file)
 			data_validation = Reader.get_data()
 			Trainer = Train_class(data_training, data_validation)
-			Trainer.process_data()
-			
+			data_training, training_labels = Trainer.process_data(data_training)
+			data_training = Trainer.data_normalization(data_training)
+			data_validation, validation_labels = Trainer.process_data(data_validation)
+			data_validation = Trainer.data_normalization(data_validation)
 		elif args.command == "split":
 			Reader = Parser()
 			Reader.read_csv(args.data_file)

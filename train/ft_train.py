@@ -4,25 +4,21 @@ class Train_class:
     def __init__(self, data_training, data_validation):
         self.training_set = data_training
         self.validation_set = data_validation
-        self.X_train = []
-        self.Y_train = []
 
-    def process_data(self):
+    def process_data(self, data):
         try:
-            X_train = []
-            Y_train = []
-            for row in self.training_set:
+            dataset = []
+            labels = []
+            for row in data:
                 row_float = [float(item) for item in row[2:]] 
-                X_train.append(row_float)
+                dataset.append(row_float)
                 if row[1] == 'B':
-                    Y_train.append(0)
+                    labels.append([1, 0])
                 else:
-                    Y_train.append(1)
-            self.X_train = X_train
-            self.Y_train = Y_train
+                    labels.append([0, 1])
         except Exception as e:
             print(f"Exception for processing data: {e}")
-        return
+        return dataset, labels
     
     def ft_std(self, columns, means):
         variances = []
@@ -38,18 +34,18 @@ class Train_class:
         for column, mean, std_dev in zip(columns, means, std_devs):
             new_column = [(value - mean) / std_dev for value in column]
             new_columns.append(new_column)
-        self.X_train = list(zip(*new_columns))
+        return list(zip(*new_columns))
             
 
-    def data_normalization(self):
+    def data_normalization(self, data):
         try:
-            columns = list(zip(*self.X_train))
+            columns = list(zip(*data))
             means = [sum (column) / len(column) for column in columns]
             std_devs = self.ft_std(columns, means)
             array_new = self.ft_recalc(columns, means, std_devs)
         except Exception as e:
             print(f"Exception for processing data: {e}")
-        return
+        return array_new
             
         
 
