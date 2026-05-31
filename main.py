@@ -43,7 +43,8 @@ def main():
 			Y_train_norm = Trainer.validation_normalisation(Y_train_raw)
 			MLP = MLP_Class()
 			MLP.input(X_train_norm, training_labels, args.hidden_layers, args.epochs, args.learning_rate)
-
+			for rows in X_train_norm:
+				MLP.ft_calculation(rows)
 			# data_validation, validation_labels = Trainer.process_data(data_validation)
 			# data_validation = Trainer.data_normalization(data_validation)
 		elif args.command == "split":

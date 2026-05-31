@@ -28,12 +28,17 @@ class MLP_Class:
         output_size = 2
         input_size = len(X_train_norm[0])
         self.layer_sizes = [input_size] + l_sizes + [output_size]
-        for size, index in enumerate(self.layer_sizes[1:], start=1):
+        for index, size in enumerate(self.layer_sizes[1:], start=1):
             self.weights.append(self.create_layer(self.layer_sizes[index - 1], size))
             self.biases.append(size * [0])
-
+        return 
+    
     def ft_activation(self):
-
-
-    def ft_calculation(self):
         
+
+    def ft_calculation(self, a_prev):
+        z = []
+        for layer in self.weights:
+            for row in layer:
+                for index, elem in enumerate(row):
+                    z = elem * a_prev[index]
