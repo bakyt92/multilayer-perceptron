@@ -44,7 +44,7 @@ def main():
 			MLP = MLP_Class()
 			MLP.input(X_train_norm, training_labels, args.hidden_layers, args.epochs, args.learning_rate)
 			for rows in X_train_norm:
-				MLP.ft_calculation(rows)
+				MLP.ft_calculation(rows, 1)
 			# data_validation, validation_labels = Trainer.process_data(data_validation)
 			# data_validation = Trainer.data_normalization(data_validation)
 		elif args.command == "split":

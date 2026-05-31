@@ -36,9 +36,12 @@ class MLP_Class:
     def ft_activation(self):
         
 
-    def ft_calculation(self, a_prev):
+    def ft_calculation(self, a_prev, layer_index):
         z = []
         for layer in self.weights:
-            for row in layer:
+            for i, row in enumerate(layer):
+                sum_tmp = 0
                 for index, elem in enumerate(row):
-                    z += elem * a_prev[index]
+                    sum_tmp += elem * a_prev[index]
+                z.append(sum_tmp + self.biases[layer_index][i])
+        return
