@@ -29,5 +29,6 @@ class MLP_Class:
         input_size = len(X_train_norm[0])
         self.layer_sizes = [input_size] + l_sizes + output_size
         for size, index in enumerate(self.layer_sizes[1:], start=1):
-            self.create_layer(self.layer_sizes[index - 1], size)
+            self.weights.append(self.create_layer(self.layer_sizes[index - 1], size))
+            self.biases.append(size * 0)
 
