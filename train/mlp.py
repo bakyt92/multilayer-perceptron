@@ -40,7 +40,6 @@ class MLP_Class:
 		return
 
 	def ft_calculation(self, a_prev):	
-		layer_index = 0
 		for layer_index, layer in enumerate(self.weights):
 			z_layer = []
 			a_layer = []
@@ -50,8 +49,12 @@ class MLP_Class:
 					sum_tmp += elem * a_prev[index]
 				z_layer.append(sum_tmp + self.biases[layer_index][i])
 			layer_index += 1
-			a_layer = [x if x > 0 else 0 for x in z_layer]
-			a_prev = a_layer
+			if layer_index == len(self.weights) - 1:
+				a_layer = math.exp(z_layer) / (math.exp(0) + math.exp(1))
+			else:
+				a_layer = [x if x > 0 else 0 for x in z_layer]
+				a_prev = a_layer
+			
 			self.z_layers_data.append(z_layer)
 			self.a_layers_data.append(a_layer)
-		return
+		return a_layer
