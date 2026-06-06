@@ -58,3 +58,8 @@ class MLP_Class:
 			self.z_layers_data.append(z_layer)
 			self.a_layers_data.append(a_layer)
 		return a_layer
+	
+	def ft_loss_func(self, a_layer, labels):
+		l = 0
+		l = - (labels[0] * math.log(a_layer[0] + 1e-15) + labels[1] * math.log(a_layer[1] + 1e-15))
+		return l

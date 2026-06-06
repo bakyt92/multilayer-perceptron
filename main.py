@@ -2,7 +2,8 @@ import sys
 import argparse
 from parser.parser import Parser
 from split.ft_split import Split_Class
-from train.ft_train import Train_class, MLP_Class
+from train.ft_train import Train_class
+from train.mlp import MLP_Class
 
 def main():
 	pars = argparse.ArgumentParser(description="Multilayer perceptron program")
@@ -45,8 +46,12 @@ def main():
 			Y_train_norm = Trainer.validation_normalisation(Y_train_raw)
 			MLP = MLP_Class()
 			MLP.input(X_train_norm, training_labels, args.hidden_layers, args.epochs, args.learning_rate)
-			for rows in X_train_norm:
-				MLP.ft_calculation(rows)
+			sum_loss = 0 
+			for i, rows in enumerate(X_train_norm):
+				p = MLP.ft_calculation(rows)
+				loss = MLP.ft_loss_func(p, training_labels[i])
+				sum_loss += loss
+			average_loss = sum_loss / i
 			# data_validation, validation_labels = Trainer.process_data(data_validation)
 			# data_validation = Trainer.data_normalization(data_validation)
 		elif args.command == "split":
