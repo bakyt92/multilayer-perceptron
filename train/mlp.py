@@ -74,14 +74,18 @@ class MLP_Class:
 				delta_next = deltas[layer_index + 1]
 				deltas[layer_index] = []
 				z_layer = self.z_layers_data[layer_index]
-				for j_index, W_rows in enumerate(W_next):
+				j_index = 0
+				while j_index < len(W_next[0]):
 					sum_j = 0
-					for k_index, W_rows in enumerate(W_rows):
+					k_index = 0
+					while k_index < len(W_next):
 						s_j = (W_next[k_index][j_index] * delta_next[k_index])
 						sum_j += s_j
+						k_index += 1
 					if z_layer[j_index] > 0:
 						delta_j = sum_j
 					else:
 						delta_j = 0
 					deltas[layer_index].append(delta_j)
+					j_index += 1
 				layer_index -= 1
