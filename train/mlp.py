@@ -72,8 +72,16 @@ class MLP_Class:
 			while (layer_index >= 0):
 				W_next = self.weights[layer_index + 1]
 				delta_next = deltas[layer_index + 1]
+				deltas[layer_index] = []
 				z_layer = self.z_layers_data[layer_index]
-				for k_index, W_rows in enumerate(W_next):
-					for j in W_rows:
-						s_j = sum(W_next[k][j] * delta_next[k])
+				for j_index, W_rows in enumerate(W_next):
+					sum_j = 0
+					for k_index, W_rows in enumerate(W_rows):
+						s_j = (W_next[k_index][j_index] * delta_next[k_index])
+						sum_j += s_j
+					if z_layer[j_index] > 0:
+						delta_j = sum_j
+					else:
+						delta_j = 0
+					deltas[layer_index].append(delta_j)
 				layer_index -= 1
