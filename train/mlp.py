@@ -10,7 +10,7 @@ class MLP_Class:
 		self.epochs = 0
 		self.z_layers_data = []
 		self.a_layers_data = []
-	
+
 	def create_layer(self, n_in, n_out):
 		if n_in < 1 or n_out < 1:
 			return None
@@ -33,13 +33,13 @@ class MLP_Class:
 		for index, size in enumerate(self.layer_sizes[1:], start=1):
 			self.weights.append(self.create_layer(self.layer_sizes[index - 1], size))
 			self.biases.append(size * [0])
-		return 
-	
+		return
+
 	def ft_activation(self):
 		pass
 		return
 
-	def ft_calculation(self, a_prev):	
+	def ft_calculation(self, a_prev):
 		for layer_index, layer in enumerate(self.weights):
 			z_layer = []
 			a_layer = []
@@ -58,8 +58,14 @@ class MLP_Class:
 			self.z_layers_data.append(z_layer)
 			self.a_layers_data.append(a_layer)
 		return a_layer
-	
+
 	def ft_loss_func(self, a_layer, labels):
 		l = 0
 		l = - (labels[0] * math.log(a_layer[0] + 1e-15) + labels[1] * math.log(a_layer[1] + 1e-15))
 		return l
+
+	def ft_backprop(self, x, y, delta_out):
+		{
+			num_layers = len(self.weights)
+			
+		}
