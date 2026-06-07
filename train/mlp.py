@@ -65,7 +65,15 @@ class MLP_Class:
 		return l
 
 	def ft_backprop(self, x, y, delta_out):
-		{
 			num_layers = len(self.weights)
-			
-		}
+			deltas = [None] * num_layers
+			deltas[-1] = delta_out
+			layer_index = num_layers - 2
+			while (layer_index >= 0):
+				W_next = self.weights[layer_index + 1]
+				delta_next = deltas[layer_index + 1]
+				z_layer = self.z_layers_data[layer_index]
+				for k_index, W_rows in enumerate(W_next):
+					for j in W_rows:
+						s_j = sum(W_next[k][j] * delta_next[k])
+				layer_index -= 1
