@@ -40,6 +40,8 @@ class MLP_Class:
 		return
 
 	def ft_calculation(self, a_prev):
+		self.z_layers_data = []
+		self.a_layers_data = []
 		for layer_index, layer in enumerate(self.weights):
 			z_layer = []
 			a_layer = []
@@ -89,21 +91,15 @@ class MLP_Class:
 				deltas[layer_index].append(delta_j)
 				j_index += 1
 			layer_index -= 1
-			# now all deltas[...] are filled, including deltas[-1] = delta_out
-
 		for layer_index in range(num_layers):
 			delta_l = deltas[layer_index]
-			# previous activations for this layer
 			if layer_index == 0:
-				a_prev = x               # input features
+				a_prev = x
 			else:
-				a_prev = self.a_layers_data[layer_index - 1]  # activations from forward pass[cite:4]
-				# for each neuron j in this layer
+				a_prev = self.a_layers_data[layer_index - 1]
 			for j in range(len(self.weights[layer_index])):
-				# for each input i to this neuron
 				for i in range(len(self.weights[layer_index][0])):
 					dW_j_i = delta_l[j] * a_prev[i]
 					self.weights[layer_index][j][i] -= self.learning_rate * dW_j_i
-
 				db_j = delta_l[j]
 				self.biases[layer_index][j] -= self.learning_rate * db_j
