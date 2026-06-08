@@ -54,8 +54,8 @@ def main():
 					loss = MLP.ft_loss_func(p, training_labels[i])
 					sum_loss += loss
 					delta_out = [p[0] - training_labels[i][0], p[1] - training_labels[i][1]]
-					MLP.ft_backprop(p, training_labels[i], delta_out)
-				average_loss = sum_loss / i
+					MLP.ft_backprop(rows, training_labels[i], delta_out)
+				average_loss = sum_loss / len(X_train_norm)
 				print(f"Step {step}; average loss is {average_loss} / {args.epochs}")
 				step += 1
 			# data_validation, validation_labels = Trainer.process_data(data_validation)
