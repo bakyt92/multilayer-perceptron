@@ -46,14 +46,18 @@ def main():
 			Y_train_norm = Trainer.validation_normalisation(Y_train_raw)
 			MLP = MLP_Class()
 			MLP.input(X_train_norm, training_labels, args.hidden_layers, args.epochs, args.learning_rate)
-			sum_loss = 0
-			for i, rows in enumerate(X_train_norm):
-				p = MLP.ft_calculation(rows)
-				loss = MLP.ft_loss_func(p, training_labels[i])
-				sum_loss += loss
-				delta_out = [p[0] - training_labels[i][0], p[1] - training_labels[i][1]]
-				MLP.ft_backprop(p, training_labels[i], delta_out)
-			average_loss = sum_loss / i
+			step = 0
+			while step < args.epochs:
+				sum_loss = 0
+				for i, rows in enumerate(X_train_norm):
+					p = MLP.ft_calculation(rows)
+					loss = MLP.ft_loss_func(p, training_labels[i])
+					sum_loss += loss
+					delta_out = [p[0] - training_labels[i][0], p[1] - training_labels[i][1]]
+					MLP.ft_backprop(p, training_labels[i], delta_out)
+				average_loss = sum_loss / i
+				print(f"Step {step}; average loss is {average_loss}")
+				step += 1
 			# data_validation, validation_labels = Trainer.process_data(data_validation)
 			# data_validation = Trainer.data_normalization(data_validation)
 		elif args.command == "split":
