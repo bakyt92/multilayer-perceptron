@@ -2,7 +2,7 @@ import sys
 
 class Parser:
 	def __init__(self):
-		data = []
+		self.data = []
 
 	def read_csv(self, link_file):
 		array = []
@@ -14,7 +14,7 @@ class Parser:
 				for line in file:
 					line = line.strip()
 					tmp = line.split(",")
-					if len(tmp) < 1 or size != tmp(len):
+					if len(tmp) < 1 or size != len(tmp):
 						tmp.clear()
 						print(f"This line is skipped (non-consistent by length / empty line): {line}.")
 						continue
@@ -25,7 +25,7 @@ class Parser:
 
 
 	def ft_data_shape(self):
-		try: 
+		try:
 			print(f"Overview of dataset.")
 			print(f"Total rows: {len(self.data)}")
 			print(f"Total columns: {len(self.data[0])}")
@@ -39,10 +39,10 @@ class Parser:
 		return
 
 	def ft_clean_data(self):
-		try: 
+		try:
 			print(f"Before cleaning data:")
 			self.ft_data_shape()
-			clean_data = [row for row in self.data if row.count('0') < 2 
+			clean_data = [row for row in self.data if row.count('0') < 2
 				 and len(row) == len(self.data[0])]
 			self.data = clean_data
 			print(f"After cleaning data:")

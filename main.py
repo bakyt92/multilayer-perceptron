@@ -56,7 +56,7 @@ def main():
 					delta_out = [p[0] - training_labels[i][0], p[1] - training_labels[i][1]]
 					MLP.ft_backprop(p, training_labels[i], delta_out)
 				average_loss = sum_loss / i
-				print(f"Step {step}; average loss is {average_loss}")
+				print(f"Step {step}; average loss is {average_loss} / {args.epochs}")
 				step += 1
 			# data_validation, validation_labels = Trainer.process_data(data_validation)
 			# data_validation = Trainer.data_normalization(data_validation)
