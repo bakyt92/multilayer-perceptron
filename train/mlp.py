@@ -65,27 +65,45 @@ class MLP_Class:
 		return l
 
 	def ft_backprop(self, x, y, delta_out):
-			num_layers = len(self.weights)
-			deltas = [None] * num_layers
-			deltas[-1] = delta_out
-			layer_index = num_layers - 2
-			while (layer_index >= 0):
-				W_next = self.weights[layer_index + 1]
-				delta_next = deltas[layer_index + 1]
-				deltas[layer_index] = []
-				z_layer = self.z_layers_data[layer_index]
-				j_index = 0
-				while j_index < len(W_next[0]):
-					sum_j = 0
-					k_index = 0
-					while k_index < len(W_next):
-						s_j = (W_next[k_index][j_index] * delta_next[k_index])
-						sum_j += s_j
-						k_index += 1
-					if z_layer[j_index] > 0:
-						delta_j = sum_j
-					else:
-						delta_j = 0
-					deltas[layer_index].append(delta_j)
-					j_index += 1
-				layer_index -= 1
+		num_layers = len(self.weights)
+		deltas = [None] * num_layers
+		deltas[-1] = delta_out
+		layer_index = num_layers - 2
+		while (layer_index >= 0):
+			W_next = self.weights[layer_index + 1]
+			delta_next = deltas[layer_index + 1]
+			deltas[layer_index] = []
+			z_layer = self.z_layers_data[layer_index]
+			j_index = 0
+			while j_index < len(W_next[0]):
+				sum_j = 0
+				k_index = 0
+				while k_index < len(W_next):
+					s_j = (W_next[k_index][j_index] * delta_next[k_index])
+					sum_j += s_j
+					k_index += 1
+				if z_layer[j_index] > 0:
+					delta_j = sum_j
+				else:
+					delta_j = 0
+				deltas[layer_index].append(delta_j)
+				j_index += 1
+			layer_index -= 1
+			# now all deltas[...] are filled, including deltas[-1] = delta_out
+
+		for layer_index in range(num_layers):
+			delta_l = deltas[layer_index]
+			# previous activations for this layer
+			if layer_index == 0:
+				a_prev = x               # input features
+			else:
+				a_prev = self.a_layers_data[layer_index - 1]  # activations from forward pass[cite:4]
+				# for each neuron j in this layer
+			for j in range(len(self.weights[layer_index])):
+				# for each input i to this neuron
+				for i in range(len(self.weights[layer_index][0])):
+					dW_j_i = delta_l[j] * a_prev[i]
+					self.weights[layer_index][j][i] -= self.learning_rate * dW_j_i
+
+				db_j = delta_l[j]
+				self.biases[layer_index][j] -= self.learning_rate * db_j
