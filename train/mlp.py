@@ -108,6 +108,9 @@ class MLP_Class:
 			"means": train_means,
 			"stds": train_stds
 		}
-		with open ("save_data.json", "w") as file:
-			file.write(model_data)
-		print(f"File save_data.json is saved")
+		try:
+			with open ("save_data.json", "w") as file:
+				file.write(model_data)
+			print(f"File save_data.json is saved")
+		except Exception as e:
+			print(f"Exception is raised", {e})

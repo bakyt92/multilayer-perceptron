@@ -60,7 +60,7 @@ def main():
 				step += 1
 			# data_validation, validation_labels = Trainer.process_data(data_validation)
 			# data_validation = Trainer.data_normalization(data_validation)
-			
+			MLP.ft_save_to_file(Trainer.get_means, Trainer.get_std)
 		elif args.command == "split":
 			Reader = Parser()
 			Reader.read_csv(args.data_file)
