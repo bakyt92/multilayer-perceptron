@@ -1,6 +1,7 @@
 import sys
 import random
 import math
+import json
 class MLP_Class:
 	def __init__(self):
 		self.weights = []
@@ -110,7 +111,7 @@ class MLP_Class:
 		}
 		try:
 			with open ("save_data.json", "w") as file:
-				file.write(model_data)
+				json.dump(model_data, file)
 			print(f"File save_data.json is saved")
 		except Exception as e:
 			print(f"Exception is raised", {e})
