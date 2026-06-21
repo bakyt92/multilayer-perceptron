@@ -99,3 +99,15 @@ class MLP_Class:
 					self.weights[layer_index][j][i] -= self.learning_rate * dW_j_i
 				db_j = delta_l[j]
 				self.biases[layer_index][j] -= self.learning_rate * db_j
+
+	def ft_save_to_file(self, train_means, train_stds):
+		model_data = {
+			"layer_sizes" : self.layer_sizes,
+			"weights": self.weights,
+			"biases": self.biases,
+			"means": train_means,
+			"stds": train_stds
+		}
+		with open ("save_data.json", "w") as file:
+			file.write(model_data)
+		print(f"File save_data.json is saved")

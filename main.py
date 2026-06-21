@@ -60,6 +60,7 @@ def main():
 				step += 1
 			# data_validation, validation_labels = Trainer.process_data(data_validation)
 			# data_validation = Trainer.data_normalization(data_validation)
+			
 		elif args.command == "split":
 			Reader = Parser()
 			Reader.read_csv(args.data_file)
