@@ -35,10 +35,6 @@ class MLP_Class:
 			self.biases.append(size * [0])
 		return
 
-	def ft_activation(self):
-		pass
-		return
-
 	def ft_calculation(self, a_prev):
 		self.z_layers_data = []
 		self.a_layers_data = []
